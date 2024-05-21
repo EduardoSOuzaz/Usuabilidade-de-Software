@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="redesoc.css" media="screen" />
+  <title>Rede Social</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9ebee;
+      background-image: url(fundinho.png);
+    }
+    
+    header {
+      background-image: url('header_bg.jpg');
+      color: black;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    
+    .navigation {
+      text-align: center;
+      margin: 20px auto;
+    }
+    
+    .navigation button {
+      background-color: #4267b2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-right: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    
+    .community-info {
+      display: flex;
+      justify-content: space-around;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+    
+    .community-info p {
+      margin: 0;
+      font-weight: bold;
+      color: #555;
+      flex: 1 1 200px;
+      text-align: center;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 40px;
+    }
+
+    .tab-button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #4267b2;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 10px;
+      text-align: center;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .tab-button:hover {
+      background-color: #4267b2;
+      transform: translateY(-2px);
+    }
+    
+    .post-highlight {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .post-highlight img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .post-details button {
+      background-color: #4267b2;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      margin-right: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    
+    .post-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .post-actions button {
+      background-color: #fff;
+      color: black;
+      box-shadow: #111;
+      border: 1px solid black;
+      padding: 5px 8px;
+      margin-right: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8em;
+    }
+    
+    footer {
+      background-color: #4267b2;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .sidenav1, .sidenav2 {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      color:#f1f1f1;
+      background-color: #17769b;
+      overflow-x: hidden;
+      padding-top: 60px;
+      transition: 0.5s;
+    }
+
+    .sidenav1 {
+      left: 0;
+    }
+
+    .sidenav2 {
+      right: 0;
+    }
+
+    .sidenav a {
+      padding: 8px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 36px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .closebtn:hover {
+      transform: scale(1.2);
+      color: red;
+    }
+
+    #main {
+      transition: margin 0.5s;
+      padding: 20px;
+    }
+    
+    #messageContent {
+      height: 0;
+      width: 100%;
+      position: fixed;
+      z-index: 1;
+      bottom: 30px;
+      background-color: #f1f1f1;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    #writeMessageButton {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #008CBA;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;  
+      display: inline-block;
+      font-size: 14px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s, bottom 0.5s;
+    }
+    
+    #writeMessageButton.clicked {
+      bottom: 100px;
+    }
+
+    #feed {
+      margin-top: 30px;
+    }
+
+    /* Estilos para os itens dentro das barras de amigos e comunidades */
+    .sidenav h3 {
+      margin: 10px 0;
+      text-align: center;
+      color: #fff;
+    }
+
+    .sidenav img {
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+    }
+
+    .container3 {
+      position: relative;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .closebtn3 {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: black;
+      cursor: pointer;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .closebtn3:hover {
+      transform: scale(1.2);
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Comunidade Recém Criada Aproveite</h1>
+  </header>
+  <div class="navigation">
+    <button> << Anterior</button>
+    <button>Dia/Mês</button>
+    <button>Hoje</button>
+    <button>Posterior >></button>
+  </div>
+  <div class="community-info">
+    <p><strong>Seguidores:</strong> 10000</p>
+    <p><strong>Visitas:</strong> 3000</p>
+    <p><strong>Postagens:</strong> 200</p>
+  </div>
+
+  <div class="buttons-container">
+    <button class="tab-button" style="align-self: flex-start;" onclick="toggleLeftNav()">☰ Amigos</button>
+    <button class="tab-button" style="align-self: flex-end;" onclick="toggleRightNav()">☰ Comunidades</button>
+  </div>
+  
+  <hr>
+
+  <div id="leftSidenav" class="sidenav1">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleLeftNav()">&times;</a>
+   <i><strong> <p>Amigos Sugeridos (3)</p></strong></i>
+    <h3 id="h1">Luana Picianno</h3>
+    <h3 id="h2">Lorena Souza</h3>
+    <h3 id="h3">Miguel Natal</h3>
+  </div>
+  
+  <div id="rightSidenav" class="sidenav2">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleRightNav()">&times;</a>
+    <p><strong>Comunidades que você Segue (3)</strong></p>
+    <a>Corinthians</a>
+    <p><a>Sulamericana </a></p>
+    <a>Champions League</a>
+    <p><strong>Comunidades Sugeridas</strong></p>
+    <p>Libertadores</p>
+    <p>Fifinha</p>
+    <p>F1 - Formula 1</p>
+  </div>
+
+  <div id="messageContent">
+    <button id="writeMessageButton" onclick="toggleWriteMessage()">✎ Escrever nova mensagem</button>
+    Vamos Marcar Algo esse Fim de Semana?
+  </div>
+
+  <section id="feed">
+    <h2>Feed de Notícias</h2>
+    <div class="post-highlight">
+      <img src="family.png" alt="Postagem Destaque">
+      <p><strong>Luanda Ferreira - Compartilhou uma nova Postagem</strong></p>
+      <p>Minha Família, Curtindo o fim de semana</p> 
+      <hr>
+      <div class="post-details">
+        <button>Postagem Verificada</button>
+        <button>Comentar</button>
+        <button>Compartilhar</button>
+      </div>
+      <div class="post-actions">
+        <button><img src="polegar-para-cima.png" alt="Curtir" style="width: 20px;"> 100</button>
+        <button><img src="polegar-baixo.png" alt="Descurtir" style="width: 20px;"> 20</button>
+        <button><img src="happy.png" alt="Rir" style="width: 20px;"> 50</button>
+        <button><img src="sad.png" alt="Lamentar" style="width: 20px;"> 10</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="feed">
+    <h2>Outras Postagens</h2>
+    <div class="post-highlight">
+      <img src="dogfeliz.png" alt="Postagem Destaque">
+      <p>Nova integrante da família!</p>
+      <p>Sandy - Muito Feliz!</p> 
+      <p>Extremamente fofa!</p>
+      <hr>
+      <div class="post-details">
+        <button>Postagem Antiga</button>
+        <button>Comentar</button>
+        <button>Compartilhar</button>
+      </div>
+      <div class="post-actions">
+        <button><img src="polegar-para-cima.png" alt="Curtir" style="width: 20px;"> 10000000</button>
+        <button><img src="polegar-baixo.png" alt="Descurtir" style="width: 20px;"> 0</button>
+        <button><img src="happy.png" alt="Rir" style="width: 20px;"> 50000</button>
+        <button><img src="sad.png" alt="Lamentar" style="width: 20px;"> 5</button>
+      </div>
+    </div>
+  </section>
+  
+  <section id="feed">
+    <h2>Outras Postagens</h2>
+    <div class="post-highlight">
+      <img src="cat.png" alt="Postagem Destaque">
+      <p>Resgatada</p>
+      <p>Um amor</p> 
+      <p>Já amo demais</p>
+      <hr>
+      <div class="post-details">
+        <button>Postagem Antiga</button>
+        <button>Comentar</button>
+        <button>Compartilhar</button>
+      </div>
+      <div class="post-actions">
+        <button><img src="polegar-para-cima.png" alt="Curtir" style="width: 20px;"> 1002210</button>
+        <button><img src="polegar-baixo.png" alt="Descurtir" style="width: 20px;"> 0</button>
+        <button><img src="happy.png" alt="Rir" style="width: 20px;"> 50908</button>
+        <button><img src="sad.png" alt="Lamentar" style="width: 20px;"> 0</button>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <p>© 2024 Minha Rede Social. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    function toggleLeftNav() {
+      var leftSidenav = document.getElementById("leftSidenav");
+      var main = document.getElementById("main");
+      if (leftSidenav.style.width === "250px") {
+        leftSidenav.style.width = "0";
+        main.style.marginLeft = "0";
+      } else {
+        leftSidenav.style.width = "250px";
+        main.style.marginLeft = "250px";
+      }
+    }
+
+    function toggleRightNav() {
+      var rightSidenav = document.getElementById("rightSidenav");
+      var main = document.getElementById("main");
+      if (rightSidenav.style.width === "250px") {
+        rightSidenav.style.width = "0";
+        main.style.marginRight = "0";
+      } else {
+        rightSidenav.style.width = "250px";
+        main.style.marginRight = "250px";
+      }
+    }
+    
+    function toggleWriteMessage() {
+      var content = document.getElementById('messageContent');
+      var button = document.getElementById('writeMessageButton');
+      if (content.style.height === '0px') {
+        content.style.height = '100px';
+        button.classList.add('clicked');
+      } else {
+        content.style.height = '0px';
+        button.classList.remove('clicked');
+      }
+    }
+
+    document.querySelector('#communitySidebar').addEventListener('click', function() {
+      this.classList.toggle('main');
+    });
+  </script>
+</body>
+</html>
